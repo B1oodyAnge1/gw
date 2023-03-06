@@ -44,8 +44,7 @@ class BasicOverlayWidget extends StatelessWidget {
   Widget backButton() => WillPopScope(
       child: Container(),
       onWillPop: () async {
-        print(
-            'HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+        controller.pause();
         return true;
       });
 }

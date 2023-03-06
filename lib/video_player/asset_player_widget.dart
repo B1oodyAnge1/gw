@@ -29,6 +29,11 @@ class _AssetPlayerWidgetState extends State<AssetPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return VideoPlayerWidget(controller: controller);
+    return WillPopScope(
+        onWillPop: () async {
+          controller.pause();
+          return true;
+        },
+        child: VideoPlayerWidget(controller: controller));
   }
 }
