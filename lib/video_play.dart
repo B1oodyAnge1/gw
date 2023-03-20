@@ -9,8 +9,11 @@ class VideoPlay extends StatelessWidget {
   Widget build(BuildContext context) {
     final String? down = ModalRoute.of(context)?.settings.arguments as String?;
 
-    return AssetPlayerWidget(
-      down: down,
+    return Material(
+      color: Colors.white,
+      child: AssetPlayerWidget(
+        down: down,
+      ),
     );
   }
 }

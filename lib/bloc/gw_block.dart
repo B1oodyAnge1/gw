@@ -15,9 +15,6 @@ class GWBloc extends Bloc<GWEvent, GWState> {
 }
 
 Future myVideo(giveMeAVideo event, GWState state, Emitter<GWState> emit) async {
-  String name;
-  String file;
-  String preview;
   List<VideoData> videoList = await getHttp();
 
   emit(state.copyWith(listVideoData: videoList));

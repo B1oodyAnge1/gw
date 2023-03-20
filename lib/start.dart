@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class Start extends StatefulWidget {
   const Start({Key? key}) : super(key: key);
   @override
+  // ignore: library_private_types_in_public_api
   _StartState createState() => _StartState();
 }
 
@@ -15,14 +16,30 @@ class _StartState extends State<Start> {
   late String str;
   @override
   Widget build(BuildContext contex) {
-    double myHeight = MediaQuery.of(context).size.height;
+    //double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
     return BlocProvider(
         create: ((context) => GWBloc()..add(giveMeAVideo())),
         child: BlocBuilder<GWBloc, GWState>(builder: (context, state) {
-          return Material(
-            // ignore: prefer_const_literals_to_create_immutables
-            child: state.listVideoData.isNotEmpty
+          return Scaffold(
+              body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  backgroundColor: Colors.black,
+                  title: Container(
+                    color: Colors.red,
+                    height: 50,
+                  ),
+                  floating: true,
+                  expandedHeight: 50.0,
+                  forceElevated: innerBoxIsScrolled,
+                ),
+              ];
+            },
+            body: state.listVideoData.isNotEmpty
                 ? ListView.builder(
                     itemCount: state.listVideoData.length,
                     itemBuilder: (context, index) {
@@ -42,7 +59,7 @@ class _StartState extends State<Start> {
                               child: Image(
                                 image: NetworkImage(
                                     state.listVideoData[index].videoPreview),
-                                fit: BoxFit.fitWidth,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             Padding(
@@ -63,7 +80,7 @@ class _StartState extends State<Start> {
                       );
                     })
                 : Container(),
-          );
+          ));
         }));
   }
 }
