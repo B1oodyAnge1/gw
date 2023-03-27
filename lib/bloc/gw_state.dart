@@ -1,5 +1,5 @@
-import 'package:flutter_application_gw/class.dart';
-import 'package:flutter_application_gw/start.dart';
+import 'package:flutter_application_gw/controllers/class.dart';
+import 'package:flutter_application_gw/screens/start.dart';
 
 class GWState extends Start {
   final String? nameVideo;

@@ -1,4 +1,4 @@
-import 'package:flutter_application_gw/start.dart';
+import 'package:flutter_application_gw/screens/start.dart';
 
 abstract class GWEvent extends Start {
   const GWEvent();

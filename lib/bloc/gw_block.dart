@@ -1,7 +1,7 @@
 import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
-import 'package:flutter_application_gw/class.dart';
-import 'package:flutter_application_gw/dio_controller.dart';
+import 'package:flutter_application_gw/controllers/class.dart';
+import 'package:flutter_application_gw/controllers/dio_controller.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GWBloc extends Bloc<GWEvent, GWState> {
