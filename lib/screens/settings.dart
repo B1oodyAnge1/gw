@@ -1,100 +1,127 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_gw/bloc/gw_block.dart';
+import 'package:flutter_application_gw/bloc/gw_event.dart';
+import 'package:flutter_application_gw/bloc/gw_state.dart';
+import 'package:flutter_application_gw/main.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
-  _StartState createState() => _StartState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _StartState extends State<Settings> {
+class _SettingsState extends State<Settings> {
   late String str;
-  bool isSwitched = false;
+  int _selectedIndex = 1;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Settings',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if (index == 0) {
+        Navigator.pushNamed(
+          context,
+          '/',
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext contex) {
     //double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      backgroundColor: isSwitched ? Colors.black : Colors.white,
-      body: NestedScrollView(
-        // Движущийся appbar
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              backgroundColor: Colors.black,
-              title: const Text("MyVideo"),
-              floating: true,
-              expandedHeight: 50.0,
-              forceElevated: innerBoxIsScrolled,
-            ),
-          ];
-        },
-        body: ListView(
-          padding: const EdgeInsets.only(
-            left: 0,
-            top: 20,
-          ),
-          children: <Widget>[
-            ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: const <Widget>[
-                      Text(
-                        "Темная тема",
-                        style: TextStyle(
-                          fontSize: 25,
+    return BlocProvider(
+        create: ((context) => GWBloc()..add(giveMeAVideo())),
+        child: BlocBuilder<GWBloc, GWState>(builder: (context, state) {
+          return Scaffold(
+            body: NestedScrollView(
+              // Движущийся appbar
+              floatHeaderSlivers: true,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverAppBar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      title: const Text("MyVideo"),
+                      floating: true,
+                      expandedHeight: 50.0,
+                      forceElevated: innerBoxIsScrolled,
+                      automaticallyImplyLeading: false),
+                ];
+              },
+              body: ListView(
+                padding: const EdgeInsets.only(
+                  left: 0,
+                  top: 20,
+                ),
+                children: <Widget>[
+                  ListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: const <Widget>[
+                            Text(
+                              "Темная тема",
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Switch(
-                        value: isSwitched,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitched = value;
-                          });
-                        },
-                        activeTrackColor: Colors.blue,
-                        activeColor: Colors.blue,
-                      ),
-                    ],
+                        Column(
+                          children: [
+                            Switch(
+                              value: choosingTheme,
+                              onChanged: (value) {
+                                setState(() {
+                                  choosingTheme = value;
+                                });
+                              },
+                              activeTrackColor: Colors.blue,
+                              activeColor: Colors.blue,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-      endDrawer: Drawer(
-        //Боковое меню
-        child: ListView(
-          children: <Widget>[
-            const SizedBox(
-              // Заголовок и его background
-              height: 64,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.black,
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                  backgroundColor: Colors.red,
                 ),
-                child: Text(
-                  "Меню",
-                  style: TextStyle(color: Colors.white),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: 'Settings',
+                  backgroundColor: Colors.pink,
                 ),
-              ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,
             ),
-            ListTile(
-              title: const Text("Настрйоки"),
-              onTap: () => Navigator.pushNamed(context, '/0'),
-            )
-          ],
-        ),
-      ),
-    );
+          );
+        }));
   }
 
   void onTapSetings() {}

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_gw/bloc/gw_block.dart';
 import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
+import 'package:flutter_application_gw/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Start extends StatefulWidget {
@@ -14,6 +15,37 @@ class Start extends StatefulWidget {
 
 class _StartState extends State<Start> {
   late String str;
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 1: Settings',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if (index == 1) {
+        Navigator.pushNamed(
+          context,
+          '/2',
+        );
+      } else {
+        Navigator.pushNamed(
+          context,
+          '/',
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext contex) {
     //double myHeight = MediaQuery.of(context).size.height;
@@ -25,17 +57,18 @@ class _StartState extends State<Start> {
             backgroundColor: Colors.white,
             body: NestedScrollView(
               // Движущийся appbar
+
               floatHeaderSlivers: true,
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
-                    backgroundColor: Colors.black,
-                    title: const Text("MyVideo"),
-                    floating: true,
-                    expandedHeight: 50.0,
-                    forceElevated: innerBoxIsScrolled,
-                  ),
+                      backgroundColor: Theme.of(context).primaryColor,
+                      title: const Text("MyVideo"),
+                      floating: true,
+                      expandedHeight: 50.0,
+                      forceElevated: innerBoxIsScrolled,
+                      automaticallyImplyLeading: false),
                 ];
               },
               body: state.listVideoData.isNotEmpty
@@ -83,33 +116,24 @@ class _StartState extends State<Start> {
                       })
                   : Container(),
             ),
-            endDrawer: Drawer(
-              //Боковое меню
-              child: ListView(
-                children: <Widget>[
-                  const SizedBox(
-                    // Заголовок и его background
-                    height: 64,
-                    child: DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                      ),
-                      child: Text(
-                        "Меню",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: const Text("Настрйоки"),
-                    onTap: () => Navigator.pushNamed(context, '/2'),
-                  )
-                ],
-              ),
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                  backgroundColor: Colors.red,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: 'Settings',
+                  backgroundColor: Colors.pink,
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.amber[800],
+              onTap: _onItemTapped,
             ),
           );
         }));
   }
-
-  void onTapSetings() {}
 }

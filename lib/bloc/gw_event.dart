@@ -9,3 +9,7 @@ abstract class GWEvent extends Start {
 class giveMeAVideo extends GWEvent {
   giveMeAVideo();
 }
+
+class giveMeChoose extends GWEvent {
+  giveMeChoose();
+}

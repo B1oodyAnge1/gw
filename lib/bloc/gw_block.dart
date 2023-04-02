@@ -9,6 +9,8 @@ class GWBloc extends Bloc<GWEvent, GWState> {
     on<GWEvent>((event, emit) async {
       if (event is giveMeAVideo) {
         await myVideo(event, state, emit);
+      } else if (event is giveMeChoose) {
+        await myChoose(event, state, emit);
       }
     });
   }
@@ -18,4 +20,11 @@ Future myVideo(giveMeAVideo event, GWState state, Emitter<GWState> emit) async {
   List<VideoData> videoList = await getHttp();
 
   emit(state.copyWith(listVideoData: videoList));
+}
+
+Future myChoose(
+    giveMeChoose event, GWState state, Emitter<GWState> emit) async {
+  bool choose = true;
+
+  emit(state.copyWith(chooseTheme: choose));
 }

@@ -2,33 +2,26 @@ import 'package:flutter_application_gw/controllers/class.dart';
 import 'package:flutter_application_gw/screens/start.dart';
 
 class GWState extends Start {
-  final String? nameVideo;
-  final String? fileVideo;
-  final String? previewVideo;
+  final bool chooseTheme;
+
   final List<VideoData> listVideoData;
 
   // ignore: use_key_in_widget_constructors
   const GWState({
-    this.nameVideo = '',
-    this.fileVideo = '',
-    this.previewVideo = '',
+    this.chooseTheme = false,
     this.listVideoData = const [],
   });
   GWState copyWith({
     String? nameVideo,
-    String? fileVideo,
-    String? previewVideo,
     List<VideoData>? listVideoData,
+    bool? chooseTheme,
   }) {
     return GWState(
-      nameVideo: nameVideo ?? this.nameVideo,
-      fileVideo: fileVideo ?? this.fileVideo,
-      previewVideo: previewVideo ?? this.previewVideo,
+      chooseTheme: chooseTheme ?? this.chooseTheme,
       listVideoData: listVideoData ?? this.listVideoData,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [nameVideo, fileVideo, previewVideo, listVideoData];
+  List<Object?> get props => [chooseTheme, listVideoData];
 }
