@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_gw/Theme/theme_constants.dart';
 
 import 'package:flutter_application_gw/bloc/gw_block.dart';
 import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
 import 'package:flutter_application_gw/main.dart';
+import 'package:flutter_application_gw/screens/settings.dart';
+import 'package:flutter_application_gw/seves/chooseTheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Start extends StatefulWidget {
@@ -51,7 +54,9 @@ class _StartState extends State<Start> {
     //double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
     return BlocProvider(
-        create: ((context) => GWBloc()..add(giveMeAVideo())),
+        create: ((context) => GWBloc()
+          ..add(giveMeAVideo())
+          ..add(giveMeChoose(chooseThemeNow: statusTheme))),
         child: BlocBuilder<GWBloc, GWState>(builder: (context, state) {
           return Scaffold(
             backgroundColor: Colors.white,

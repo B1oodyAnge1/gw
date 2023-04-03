@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_gw/Theme/theme_constants.dart';
 import 'package:flutter_application_gw/bloc/gw_block.dart';
 import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
 import 'package:flutter_application_gw/main.dart';
+import 'package:flutter_application_gw/seves/chooseTheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Settings extends StatefulWidget {
@@ -14,6 +16,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   late String str;
+  bool v = false;
   int _selectedIndex = 1;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -86,10 +89,19 @@ class _SettingsState extends State<Settings> {
                         Column(
                           children: [
                             Switch(
-                              value: choosingTheme,
+                              value: v,
                               onChanged: (value) {
                                 setState(() {
-                                  choosingTheme = value;
+                                  v = value;
+                                  if (value != false) {
+                                    context.read<GWBloc>().add(giveMeChoose(
+                                        chooseThemeNow: statusTheme));
+                                    Home.of(context)
+                                        .changeTheme(ThemeMode.dark);
+                                  } else {
+                                    Home.of(context)
+                                        .changeTheme(ThemeMode.light);
+                                  }
                                 });
                               },
                               activeTrackColor: Colors.blue,

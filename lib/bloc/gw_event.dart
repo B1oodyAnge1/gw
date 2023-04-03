@@ -11,5 +11,6 @@ class giveMeAVideo extends GWEvent {
 }
 
 class giveMeChoose extends GWEvent {
-  giveMeChoose();
+  bool? chooseThemeNow;
+  giveMeChoose({required chooseThemeNow});
 }

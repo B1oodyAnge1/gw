@@ -2,6 +2,7 @@ import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
 import 'package:flutter_application_gw/controllers/class.dart';
 import 'package:flutter_application_gw/controllers/dio_controller.dart';
+import 'package:flutter_application_gw/seves/chooseTheme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GWBloc extends Bloc<GWEvent, GWState> {
@@ -24,7 +25,13 @@ Future myVideo(giveMeAVideo event, GWState state, Emitter<GWState> emit) async {
 
 Future myChoose(
     giveMeChoose event, GWState state, Emitter<GWState> emit) async {
-  bool choose = true;
+  bool? choose;
+  if (event.chooseThemeNow != null) {
+    choose = event.chooseThemeNow;
+  } else {
+    choose = false;
+    statusTheme = false;
+  }
 
   emit(state.copyWith(chooseTheme: choose));
 }
