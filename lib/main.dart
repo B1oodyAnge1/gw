@@ -8,7 +8,7 @@ import 'package:flutter_application_gw/bloc/gw_state.dart';
 import 'package:flutter_application_gw/screens/settings.dart';
 import 'package:flutter_application_gw/screens/start.dart';
 import 'package:flutter_application_gw/screens/video_play.dart';
-import 'package:flutter_application_gw/seves/chooseTheme.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 ThemeMode _themeMode = ThemeMode.system;
@@ -33,8 +33,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext contex) {
     return BlocProvider(
-        create: ((context) =>
-            GWBloc()..add(giveMeChoose(chooseThemeNow: statusTheme))),
+        create: ((context) => GWBloc()),
         child: BlocBuilder<GWBloc, GWState>(builder: (context, state) {
           return MaterialApp(
               theme: lightTheme,

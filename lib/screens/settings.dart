@@ -4,7 +4,7 @@ import 'package:flutter_application_gw/bloc/gw_block.dart';
 import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
 import 'package:flutter_application_gw/main.dart';
-import 'package:flutter_application_gw/seves/chooseTheme.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Settings extends StatefulWidget {
@@ -59,7 +59,10 @@ class _SettingsState extends State<Settings> {
                 return <Widget>[
                   SliverAppBar(
                       backgroundColor: Theme.of(context).primaryColor,
-                      title: const Text("MyVideo"),
+                      title: Text(
+                        "MyVideo",
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
                       floating: true,
                       expandedHeight: 50.0,
                       forceElevated: innerBoxIsScrolled,
@@ -94,8 +97,6 @@ class _SettingsState extends State<Settings> {
                                 setState(() {
                                   v = value;
                                   if (value != false) {
-                                    context.read<GWBloc>().add(giveMeChoose(
-                                        chooseThemeNow: statusTheme));
                                     Home.of(context)
                                         .changeTheme(ThemeMode.dark);
                                   } else {
@@ -116,20 +117,19 @@ class _SettingsState extends State<Settings> {
               ),
             ),
             bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',
-                  backgroundColor: Colors.red,
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
                   label: 'Settings',
-                  backgroundColor: Colors.pink,
                 ),
               ],
               currentIndex: _selectedIndex,
-              selectedItemColor: Colors.amber[800],
+              selectedItemColor: Colors.blue,
               onTap: _onItemTapped,
             ),
           );

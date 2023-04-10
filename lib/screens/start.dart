@@ -6,7 +6,7 @@ import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
 import 'package:flutter_application_gw/main.dart';
 import 'package:flutter_application_gw/screens/settings.dart';
-import 'package:flutter_application_gw/seves/chooseTheme.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Start extends StatefulWidget {
@@ -54,12 +54,10 @@ class _StartState extends State<Start> {
     //double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
     return BlocProvider(
-        create: ((context) => GWBloc()
-          ..add(giveMeAVideo())
-          ..add(giveMeChoose(chooseThemeNow: statusTheme))),
+        create: ((context) => GWBloc()..add(giveMeAVideo())),
         child: BlocBuilder<GWBloc, GWState>(builder: (context, state) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: NestedScrollView(
               // Движущийся appbar
 
@@ -69,7 +67,10 @@ class _StartState extends State<Start> {
                 return <Widget>[
                   SliverAppBar(
                       backgroundColor: Theme.of(context).primaryColor,
-                      title: const Text("MyVideo"),
+                      title: Text(
+                        "MyVideo",
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
                       floating: true,
                       expandedHeight: 50.0,
                       forceElevated: innerBoxIsScrolled,
@@ -89,53 +90,54 @@ class _StartState extends State<Start> {
                                       .listVideoData[index].videoDownloader);
                             });
                           },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: myWidth,
-                                child: Image(
-                                  image: NetworkImage(
-                                      state.listVideoData[index].videoPreview),
-                                  fit: BoxFit.fill,
+                          child: Container(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: myWidth,
+                                  child: Image(
+                                    image: NetworkImage(state
+                                        .listVideoData[index].videoPreview),
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 15,
-                                  bottom: 15,
-                                  left: 20,
-                                  right: 20,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 15,
+                                    bottom: 15,
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: Text(
+                                    state.listVideoData[index].videoName,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
                                 ),
-                                child: Text(
-                                  state.listVideoData[index].videoName,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       })
                   : Container(),
             ),
             bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',
-                  backgroundColor: Colors.red,
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
                   label: 'Settings',
-                  backgroundColor: Colors.pink,
                 ),
               ],
               currentIndex: _selectedIndex,
-              selectedItemColor: Colors.amber[800],
+              selectedItemColor: Colors.blue,
               onTap: _onItemTapped,
             ),
           );
