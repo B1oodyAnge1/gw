@@ -16,7 +16,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   late String str;
-  bool v = false;
+  bool? v;
   int _selectedIndex = 1;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -29,11 +29,28 @@ class _SettingsState extends State<Settings> {
       'Index 1: Settings',
       style: optionStyle,
     ),
+    Text(
+      'Index 2: QR',
+      style: optionStyle,
+    ),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if (index == 1) {
+        Navigator.pushNamed(
+          context,
+          '/2',
+        );
+      }
+      if (index == 2) {
+        Navigator.pushNamed(
+          context,
+          '/3',
+        );
+      }
+
       if (index == 0) {
         Navigator.pushNamed(
           context,
@@ -50,6 +67,9 @@ class _SettingsState extends State<Settings> {
     return BlocProvider(
         create: ((context) => GWBloc()..add(giveMeAVideo())),
         child: BlocBuilder<GWBloc, GWState>(builder: (context, state) {
+          v = Theme.of(context).scaffoldBackgroundColor == Colors.black
+              ? true
+              : false;
           return Scaffold(
             body: NestedScrollView(
               // Движущийся appbar
@@ -92,7 +112,7 @@ class _SettingsState extends State<Settings> {
                         Column(
                           children: [
                             Switch(
-                              value: v,
+                              value: v as bool,
                               onChanged: (value) {
                                 setState(() {
                                   v = value;
@@ -126,6 +146,10 @@ class _SettingsState extends State<Settings> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
                   label: 'Settings',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.qr_code_2),
+                  label: 'QR',
                 ),
               ],
               currentIndex: _selectedIndex,

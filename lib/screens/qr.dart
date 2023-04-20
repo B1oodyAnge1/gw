@@ -10,16 +10,16 @@ import 'package:flutter_application_gw/screens/settings.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Start extends StatefulWidget {
-  const Start({Key? key}) : super(key: key);
+class QrCode extends StatefulWidget {
+  const QrCode({Key? key}) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
-  _StartState createState() => _StartState();
+  _QrCodeState createState() => _QrCodeState();
 }
 
-class _StartState extends State<Start> {
+class _QrCodeState extends State<QrCode> {
   late String str;
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -66,6 +66,7 @@ class _StartState extends State<Start> {
   Widget build(BuildContext contex) {
     //double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
+    String qrCodeResult = "Not Yet Scanned";
     return BlocProvider(
         create: ((context) => GWBloc()..add(giveMeAVideo())),
         child: BlocBuilder<GWBloc, GWState>(builder: (context, state) {
@@ -84,69 +85,21 @@ class _StartState extends State<Start> {
                         "MyVideo",
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
-                      actions: [
-                        IconButton(
-                            onPressed: () {
-                              showSearch(
-                                context: context,
-                                delegate: MySearchDelegate(
-                                    searchResults: state.listVideoData),
-                              );
-                            },
-                            icon: const Icon(Icons.search))
-                      ],
                       floating: true,
                       expandedHeight: 50.0,
                       forceElevated: innerBoxIsScrolled,
                       automaticallyImplyLeading: false),
                 ];
               },
-              body: state.listVideoData.isNotEmpty
-                  ? ListView.builder(
-                      // builder для списка видео
-                      itemCount: state.listVideoData.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              Navigator.pushNamed(context, '/1',
-                                  arguments: state
-                                      .listVideoData[index].videoDownloader);
-                            });
-                          },
-                          child: Container(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: myWidth,
-                                  child: Image(
-                                    image: NetworkImage(state
-                                        .listVideoData[index].videoPreview),
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 15,
-                                    bottom: 15,
-                                    left: 20,
-                                    right: 20,
-                                  ),
-                                  child: Text(
-                                    state.listVideoData[index].videoName,
-                                    style:
-                                        Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      })
-                  : Container(),
+              body: Container(
+                width: 500,
+                height: 500,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [],
+                ),
+              ),
             ),
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,

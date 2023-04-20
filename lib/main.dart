@@ -5,6 +5,7 @@ import 'package:flutter_application_gw/Theme/theme_constants.dart';
 import 'package:flutter_application_gw/bloc/gw_block.dart';
 import 'package:flutter_application_gw/bloc/gw_event.dart';
 import 'package:flutter_application_gw/bloc/gw_state.dart';
+import 'package:flutter_application_gw/screens/qr.dart';
 import 'package:flutter_application_gw/screens/settings.dart';
 import 'package:flutter_application_gw/screens/start.dart';
 import 'package:flutter_application_gw/screens/video_play.dart';
@@ -44,6 +45,7 @@ class _HomeState extends State<Home> {
                 '/': (context) => const Start(),
                 '/1': (context) => const VideoPlay(),
                 '/2': (context) => const Settings(),
+                '/3': (context) => const QrCode(),
               });
         }));
   }

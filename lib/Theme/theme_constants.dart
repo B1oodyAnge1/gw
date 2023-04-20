@@ -17,7 +17,7 @@ ThemeData lightTheme = ThemeData(
 );
 
 ThemeData darkTheme = ThemeData(
-  primaryColor: Colors.blue,
+  primaryColor: Colors.white,
   scaffoldBackgroundColor: Colors.black,
   brightness: Brightness.dark,
   textTheme: const TextTheme(
