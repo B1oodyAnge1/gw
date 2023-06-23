@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_gw/video_player/video_player_widget.dart';
 import 'package:video_player/video_player.dart';
 
@@ -20,9 +21,19 @@ class _AssetPlayerWidgetState extends State<AssetPlayerWidget> {
       ..addListener(() => setState(() {}))
       ..setLooping(true)
       ..initialize().then((_) => controller.play());
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
   }
 
   void disponse() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     controller.dispose();
     super.dispose();
   }

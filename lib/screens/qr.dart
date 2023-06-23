@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_gw/Theme/theme_constants.dart';
 
 import 'package:flutter_application_gw/bloc/gw_block.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_application_gw/screens/settings.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
 class QrCode extends StatefulWidget {
   const QrCode({Key? key}) : super(key: key);
   @override
@@ -20,6 +23,12 @@ class QrCode extends StatefulWidget {
 class _QrCodeState extends State<QrCode> {
   late String str;
   int _selectedIndex = 2;
+  String _scanBarcode = 'Unknown';
+  @override
+  void initState() {
+    super.initState();
+  }
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -63,6 +72,28 @@ class _QrCodeState extends State<QrCode> {
   }
 
   @override
+  Future<void> scanQR() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _scanBarcode = barcodeScanRes;
+    });
+  }
+
+  @override
   Widget build(BuildContext contex) {
     //double myHeight = MediaQuery.of(context).size.height;
     double myWidth = MediaQuery.of(context).size.width;
@@ -91,13 +122,15 @@ class _QrCodeState extends State<QrCode> {
                       automaticallyImplyLeading: false),
                 ];
               },
-              body: Container(
-                width: 500,
-                height: 500,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [],
+              body: Center(
+                child: GestureDetector(
+                  onTap: () => scanQR(),
+                  child: Container(
+                    height: 50,
+                    width: 200,
+                    color: Colors.green,
+                    child: Text('Qr'),
+                  ),
                 ),
               ),
             ),

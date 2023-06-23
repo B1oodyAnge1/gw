@@ -30,7 +30,23 @@ class VideoPlayerWidget extends StatelessWidget {
         )
       ]);
 
-  Widget buildVildeoPlayer() => AspectRatio(
-      aspectRatio: controller.value.aspectRatio,
-      child: VideoPlayer(controller));
+  Widget buildVildeoPlayer() => buildFullScreen(
+      child: AspectRatio(
+          aspectRatio: controller.value.aspectRatio,
+          child: VideoPlayer(controller)));
+
+  Widget buildFullScreen({
+    required Widget child,
+  }) {
+    final size = controller.value.size;
+    final width = size.width;
+    final height = size.height;
+    return FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: width,
+          height: height,
+          child: child,
+        ));
+  }
 }

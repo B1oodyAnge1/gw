@@ -45,7 +45,6 @@ class _HomeState extends State<Home> {
                 '/': (context) => const Start(),
                 '/1': (context) => const VideoPlay(),
                 '/2': (context) => const Settings(),
-                '/3': (context) => const QrCode(),
               });
         }));
   }
